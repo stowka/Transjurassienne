@@ -19,21 +19,18 @@ public class CSVParser {
 					file), "UTF8"));
 			String line = "";
 			int lineNumber = 0;
+			int col = 0;
 			HashMap<String, String> tmpLine;
-			
+			line = br.readLine();
+			String[] keys = line.split(";");
 			while (null != (line = br.readLine())) {
 				if (0 != lineNumber) {
 					tmpLine = new HashMap<String, String>();
-					tmpLine.put("dossard", line.split(";")[0]);
-					tmpLine.put("classement", line.split(";")[1]);
-					tmpLine.put("nom", line.split(";")[2]);
-					tmpLine.put("naissance", line.split(";")[3]);
-					tmpLine.put("club", line.split(";")[4]);
-					tmpLine.put("nation", line.split(";")[5]);
-					tmpLine.put("arrivee", line.split(";")[6]);
-					tmpLine.put("course", line.split(";")[7]);
-					tmpLine.put("nom_categorie", line.split(";")[8]);
-					tmpLine.put("classement_categorie", line.split(";")[9]);
+					col = 0;
+					for (String key : keys) {
+						tmpLine.put(key, line.split(";")[col]);
+						col += 1;
+					}
 					data.add(tmpLine);
 				}
 				lineNumber += 1;

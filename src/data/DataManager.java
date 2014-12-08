@@ -26,7 +26,7 @@ public class DataManager {
 				years.add(new Year(Integer.parseInt(child.getName().substring(0, 4))));
 				data = CSVParser.parse(child);
 				for(HashMap<String, String> line : data) {
-					System.out.println(line.get("nom"));
+					System.out.println(line.get("Nom"));
 				}
 			}
 		}
