@@ -17,7 +17,7 @@ public abstract class Race {
 	 * @param _gender
 	 * @param _distance
 	 */
-	public Race(int _year, boolean _gender, int _distance) {
+	protected Race(int _year, boolean _gender, int _distance) {
 		year = _year;
 		gender = _gender;
 		distance = _distance;
