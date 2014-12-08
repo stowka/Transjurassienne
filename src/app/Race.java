@@ -1,16 +1,20 @@
 package app;
 
+import java.util.HashMap;
+
 /**
  * Abstract class race
+ * 
  * @author Antoine De Gieter
  * @author Fran&ccedil;ois-Xavier B&eacute;ligat
- *
+ * 
  */
 public abstract class Race {
 	protected int distance;
 	protected int year;
 	protected boolean gender; // 0 = man / 1 = woman
-	
+	protected HashMap<Skier, Results> participants;
+
 	/**
 	 * 
 	 * @param _year
@@ -21,6 +25,31 @@ public abstract class Race {
 		year = _year;
 		gender = _gender;
 		distance = _distance;
+		participants = new HashMap<Skier, Results>();
+	}
+
+	/**
+	 * @param the new participant (skier)
+	 */
+	public void addParticipant(Skier participant, Results results) {
+		participants.put(participant, results);
+	}
+	
+	/**
+	 * 
+	 * @return the list of participants
+	 */
+	public HashMap<Skier, Results> getParticipants() {
+		return participants;
+	}
+	
+	/**
+	 * 
+	 * @param participant
+	 * @return the results for a given participant
+	 */
+	public Results getResults(Skier participant) {
+		return participants.get(participant);
 	}
 
 	/**
@@ -31,7 +60,8 @@ public abstract class Race {
 	}
 
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(int distance) {
 		this.distance = distance;
@@ -45,7 +75,8 @@ public abstract class Race {
 	}
 
 	/**
-	 * @param year the year to set
+	 * @param year
+	 *            the year to set
 	 */
 	public void setYear(int year) {
 		this.year = year;
@@ -59,7 +90,8 @@ public abstract class Race {
 	}
 
 	/**
-	 * @param gender the gender to set
+	 * @param gender
+	 *            the gender to set
 	 */
 	public void setGender(boolean gender) {
 		this.gender = gender;

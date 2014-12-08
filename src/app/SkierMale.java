@@ -8,9 +8,9 @@ package app;
  */
 public class SkierMale extends Skier {
 
-	protected SkierMale(String _name, int _birthYear, String _club,
-			String _nationality) {
-		super(_name, _birthYear, _club, _nationality);
+	public SkierMale(String _name, int _birthYear, String _club,
+			String _nationality, String _category) {
+		super(_name, _birthYear, _club, _nationality, _category);
 	}
 
 }
