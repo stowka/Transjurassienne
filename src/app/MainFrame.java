@@ -25,8 +25,8 @@ public class MainFrame extends JFrame {
 	private JLabel averageTimeLabel;
 	private JTextField nbParticipants;
 	private JTextField averageTime;
-	private JComboBox<String> year;
-	private JComboBox<String> raceCategory;;
+	private JComboBox year;
+	private JComboBox raceCategory;;
 	private JTabbedPane tabs;
 	
 	public MainFrame() {
@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 		
 		//Year ComboBox
 		String[] yearsString = {"2011", "2012", "2013", "2014"}; //This is temporary 
-		year = new JComboBox<String>(yearsString);
+		year = new JComboBox(yearsString);
 		northPanel.add(year);
 		
 		//Race Category Label
@@ -63,7 +63,7 @@ public class MainFrame extends JFrame {
 		
 		//Race Category ComboBox
 		String[] raceCategoryString = {"25CTF", "25CTM", "25FTF", "25FTM", "50CTF", "50CTM", "76FTF", "76FTM"};
-		raceCategory = new JComboBox<String>(raceCategoryString);
+		raceCategory = new JComboBox(raceCategoryString);
 		northPanel.add(raceCategory);
 		
 		//Set up tabbed pane
