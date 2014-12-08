@@ -5,30 +5,88 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
+import app.Results;
 import app.Skier;
+import app.SkierFemale;
+import app.SkierMale;
 import app.Year;
 
 public class DataManager {
 	private static TreeSet<Skier> skiers;
 	private static TreeSet<Year> years;
 
-	public static void addSkier(Skier skier) {
+	private final static String PATH_TO_FILES = ".";
+	private final static String REGEX_MATCHING_FILES = "201[12].csv";
+
+	private static void addSkier(Skier skier) {
 		skiers.add(skier);
 	}
 
 	public static void init() {
-		File dir = new File(".");
+		File directory = new File(PATH_TO_FILES);
 		ArrayList<HashMap<String, String>> data;
+
+		Skier tmpSkier;
+		Year tmpYear;
+		Results tmpResults;
+
 		years = new TreeSet<Year>();
-		File[] directoryListing = dir.listFiles();
-		for (File child : directoryListing) {
-			if (child.getName().matches("[0-9]{4}.csv")) {
-				years.add(new Year(Integer.parseInt(child.getName().substring(0, 4))));
+		skiers = new TreeSet<Skier>();
+		File[] directoryListing = directory.listFiles();
+
+		String name = "";
+		int birthYear = 0;
+		String club = "";
+		String nationality = "";
+		String category = "";
+		int rank = 0;
+		int categoryRank = 0;
+		String time = "";
+
+		for (File child : directoryListing) { // browse files
+			if (child.getName().matches(REGEX_MATCHING_FILES)) {
+				tmpYear = new Year(Integer.parseInt(child.getName().substring(
+						0, 4)));
 				data = CSVParser.parse(child);
-				for(HashMap<String, String> line : data) {
-					System.out.println(line.get("Nom"));
+
+				for (HashMap<String, String> entry : data) { // browse entries
+
+					name = entry.get("Nom");
+					birthYear = Integer.parseInt(entry.get("Naissance"));
+					club = entry.get("Club");
+					nationality = entry.get("Nation");
+					category = entry.get("Nom_Categorie");
+					rank = Integer.parseInt(entry.get("Classement"));
+					categoryRank = Integer
+							.parseInt(entry.get("Classement_cat"));
+					time = entry.get("Arrivee");
+
+					if ('F' == entry.get("Course").charAt(
+							entry.get("Course").length() - 1))
+						tmpSkier = new SkierFemale(name, birthYear, club,
+								nationality, category);
+					else
+						tmpSkier = new SkierMale(name, birthYear, club,
+								nationality, category);
+
+					tmpResults = new Results(rank, categoryRank, time);
+
+					tmpYear.getRaces().get(entry.get("Course"))
+							.addParticipant(tmpSkier, tmpResults);
+
+					addSkier(tmpSkier);
 				}
 			}
 		}
+
+		System.out.println(skiers);
+	}
+
+	public static TreeSet<Year> getYears() {
+		return years;
+	}
+
+	public static TreeSet<Skier> getSkiers() {
+		return skiers;
 	}
 }

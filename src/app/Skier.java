@@ -6,7 +6,8 @@ package app;
  * @author Fran&ccedil;ois-Xavier B&eacute;ligat
  *
  */
-public abstract class Skier {
+@SuppressWarnings("rawtypes")
+public abstract class Skier implements Comparable {
 	protected String name;
 	protected int birthYear;
 	protected String club;
@@ -114,5 +115,11 @@ public abstract class Skier {
 	 */
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
+	}
+	
+	@Override
+	public int compareTo(Object arg0) {
+		Skier s = (Skier)arg0;
+		return getName().compareTo(s.getName());
 	}
 }

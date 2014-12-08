@@ -3,9 +3,9 @@ package app;
 public class Results {
 	private int rank;
 	private int categoryRank;
-	private long time;
+	private String time;
 	
-	public Results(int _rank, int _categoryRank, long _time) {
+	public Results(int _rank, int _categoryRank, String _time) {
 		rank = _rank;
 		categoryRank = _categoryRank;
 		time = _time;
@@ -28,7 +28,7 @@ public class Results {
 	/**
 	 * @return the time
 	 */
-	public long getTime() {
+	public String getTime() {
 		return time;
 	}
 }
