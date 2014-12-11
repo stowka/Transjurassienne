@@ -33,7 +33,6 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabs;
 	
 	public MainFrame() {
-		
 		setLocationRelativeTo(null);
 		setTitle("Transjurassienne");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
@@ -81,7 +80,7 @@ public class MainFrame extends JFrame {
 		
 		//Tab 1
 		tab1 = new JPanel();
-		tabs.addTab("Result", tab1);
+		tabs.addTab("Results", tab1);
 		
 		//Tab 2
 		tab2 = new JPanel();
@@ -94,7 +93,7 @@ public class MainFrame extends JFrame {
 		mainPanel.add(tabs, BorderLayout.CENTER);
 		
 		//Tab 1 : label nb participants
-		nbParticipantsLabel = new JLabel("Number of Participants : ");
+		nbParticipantsLabel = new JLabel("Number of participants : ");
 		tab1.add(nbParticipantsLabel);
 		
 		//Tab 1 : text field nb participants
@@ -117,6 +116,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void fillResult(String year, String category) {
-		//TODO 
+		Race race = DataManager.getInstance().getYears().get(year).getRaces().get(category);
+		// TODO
 	}
 }
