@@ -17,15 +17,15 @@ public class DataManager {
 
 	private final static String PATH_TO_FILES = ".";
 	private final static String REGEX_MATCHING_FILES = "201[12].csv";
-	
+
 	private static DataManager _instance = null;
-	
+
 	public static DataManager getInstance() {
 		if (null == _instance)
 			_instance = new DataManager();
 		return _instance;
 	}
-	
+
 	private DataManager() {
 		File directory = new File(PATH_TO_FILES);
 		ArrayList<HashMap<String, String>> data;
@@ -80,7 +80,7 @@ public class DataManager {
 							.addParticipant(tmpSkier, tmpResults);
 
 					skiers.add(tmpSkier);
-				}	
+				}
 			}
 		}
 	}
@@ -91,5 +91,20 @@ public class DataManager {
 
 	public TreeSet<Skier> getSkiers() {
 		return _instance.skiers;
+	}
+
+	// TODO stats calculations
+	public int numberOfParticipants(String year, String category) {
+		return _instance.getYears().get(year).getRaces().get(category)
+				.getParticipants().size();
+	}
+
+	public HashMap<String, Integer> numberOfParticipantsByCategory(String year) {
+		HashMap<String, Integer> tmp = new HashMap<String, Integer>();
+		for (String key : _instance.getYears().get(year).getRaces().keySet()) {
+			tmp.put(key, _instance.getYears().get(year).getRaces().get(key)
+					.getParticipants().size());
+		}
+		return tmp;
 	}
 }

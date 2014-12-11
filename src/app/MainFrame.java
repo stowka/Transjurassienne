@@ -33,12 +33,12 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabs;
 	
 	public MainFrame() {
-		setLocationRelativeTo(null);
 		setTitle("Transjurassienne");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//setSize(new Dimension(getWidth(), getHeight()));
 		setSize(new Dimension(640, 480));
+		setLocationRelativeTo(null);
 		
 		//Set the main panel with a border layout
 		mainPanel = new JPanel();
