@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import data.DataManager;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	private JPanel mainPanel;
@@ -30,6 +32,8 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabs;
 	
 	public MainFrame() {
+		DataManager.init();
+		
 		setLocationRelativeTo(null);
 		setTitle("Transjurassienne");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
@@ -52,7 +56,13 @@ public class MainFrame extends JFrame {
 		northPanel.add(yearLabel);
 		
 		//Year ComboBox
-		String[] yearsString = {"2011", "2012", "2013", "2014"}; //This is temporary 
+		String[] yearsString = new String[DataManager.getYears().size()];
+		int it = 0;
+		for (Year y : DataManager.getYears()) {
+			yearsString[it] = "" + y.getYear();
+			System.out.println(y.getYear());
+			it += 1;
+		}
 		year = new JComboBox(yearsString);
 		northPanel.add(year);
 		
