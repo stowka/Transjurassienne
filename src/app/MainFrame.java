@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
+import java.util.Arrays;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -58,11 +59,11 @@ public class MainFrame extends JFrame {
 		//Year ComboBox
 		String[] yearsString = new String[DataManager.getYears().size()];
 		int it = 0;
-		for (Year y : DataManager.getYears()) {
-			yearsString[it] = "" + y.getYear();
-			System.out.println(y.getYear());
+		for (String y : DataManager.getYears().keySet()) {
+			yearsString[it] = y;
 			it += 1;
 		}
+		Arrays.sort(yearsString);
 		year = new JComboBox(yearsString);
 		northPanel.add(year);
 		
@@ -114,6 +115,9 @@ public class MainFrame extends JFrame {
 		tab1.add(averageTime);
 		
 		setVisible(true);
-		
+	}
+	
+	private void fillResult(String year, String category) {
+		//TODO 
 	}
 }

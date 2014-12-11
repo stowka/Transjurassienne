@@ -3,6 +3,7 @@ package data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 import app.Results;
@@ -13,7 +14,7 @@ import app.Year;
 
 public class DataManager {
 	private static TreeSet<Skier> skiers;
-	private static TreeSet<Year> years;
+	private static HashMap<String, Year> years;
 
 	private final static String PATH_TO_FILES = ".";
 	private final static String REGEX_MATCHING_FILES = "201[12].csv";
@@ -30,7 +31,7 @@ public class DataManager {
 		Year tmpYear;
 		Results tmpResults;
 
-		years = new TreeSet<Year>();
+		years = new HashMap<String, Year>();
 		skiers = new TreeSet<Skier>();
 		File[] directoryListing = directory.listFiles();
 
@@ -47,6 +48,7 @@ public class DataManager {
 			if (child.getName().matches(REGEX_MATCHING_FILES)) {
 				tmpYear = new Year(Integer.parseInt(child.getName().substring(
 						0, 4)));
+				years.put(child.getName().substring(0, 4), tmpYear);
 				data = CSVParser.parse(child);
 
 				for (HashMap<String, String> entry : data) { // browse entries
@@ -75,14 +77,12 @@ public class DataManager {
 							.addParticipant(tmpSkier, tmpResults);
 
 					addSkier(tmpSkier);
-				}
+				}	
 			}
 		}
-
-		System.out.println(skiers);
 	}
 
-	public static TreeSet<Year> getYears() {
+	public static HashMap<String, Year> getYears() {
 		return years;
 	}
 
