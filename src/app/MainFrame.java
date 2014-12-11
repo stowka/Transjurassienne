@@ -33,7 +33,6 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabs;
 	
 	public MainFrame() {
-		DataManager.init();
 		
 		setLocationRelativeTo(null);
 		setTitle("Transjurassienne");
@@ -57,9 +56,9 @@ public class MainFrame extends JFrame {
 		northPanel.add(yearLabel);
 		
 		//Year ComboBox
-		String[] yearsString = new String[DataManager.getYears().size()];
+		String[] yearsString = new String[DataManager.getInstance().getYears().size()];
 		int it = 0;
-		for (String y : DataManager.getYears().keySet()) {
+		for (String y : DataManager.getInstance().getYears().keySet()) {
 			yearsString[it] = y;
 			it += 1;
 		}

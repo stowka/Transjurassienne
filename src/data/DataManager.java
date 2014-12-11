@@ -3,7 +3,6 @@ package data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeSet;
 
 import app.Results;
@@ -13,17 +12,21 @@ import app.SkierMale;
 import app.Year;
 
 public class DataManager {
-	private static TreeSet<Skier> skiers;
-	private static HashMap<String, Year> years;
+	private TreeSet<Skier> skiers;
+	private HashMap<String, Year> years;
 
 	private final static String PATH_TO_FILES = ".";
 	private final static String REGEX_MATCHING_FILES = "201[12].csv";
-
-	private static void addSkier(Skier skier) {
-		skiers.add(skier);
+	
+	private static DataManager _instance = null;
+	
+	public static DataManager getInstance() {
+		if (null == _instance)
+			_instance = new DataManager();
+		return _instance;
 	}
-
-	public static void init() {
+	
+	private DataManager() {
 		File directory = new File(PATH_TO_FILES);
 		ArrayList<HashMap<String, String>> data;
 
@@ -76,17 +79,17 @@ public class DataManager {
 					tmpYear.getRaces().get(entry.get("Course"))
 							.addParticipant(tmpSkier, tmpResults);
 
-					addSkier(tmpSkier);
+					skiers.add(tmpSkier);
 				}	
 			}
 		}
 	}
 
-	public static HashMap<String, Year> getYears() {
-		return years;
+	public HashMap<String, Year> getYears() {
+		return _instance.years;
 	}
 
-	public static TreeSet<Skier> getSkiers() {
-		return skiers;
+	public TreeSet<Skier> getSkiers() {
+		return _instance.skiers;
 	}
 }
