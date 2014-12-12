@@ -116,6 +116,7 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 	}
 	
+	@SuppressWarnings("unused")
 	private void fillResult(String year, String category) {
 		Race race = DataManager.getInstance().getYears().get(year).getRaces().get(category);
 		// TODO
