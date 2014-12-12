@@ -15,7 +15,7 @@ public class DataManager {
 	private TreeSet<Skier> skiers;
 	private HashMap<String, Year> years;
 
-	private final static String PATH_TO_FILES = ".";
+	private final static String PATH_TO_FILES = "./assets/csv/";
 	private final static String REGEX_MATCHING_FILES = "201[12].csv";
 
 	private static DataManager _instance = null;
