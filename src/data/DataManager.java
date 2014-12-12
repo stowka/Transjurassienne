@@ -99,12 +99,59 @@ public class DataManager {
 				.getParticipants().size();
 	}
 
-	public HashMap<String, Integer> numberOfParticipantsByCategory(String year) {
+	public HashMap<String, Integer> numberOfParticipants(String year) {
 		HashMap<String, Integer> tmp = new HashMap<String, Integer>();
 		for (String key : _instance.getYears().get(year).getRaces().keySet()) {
 			tmp.put(key, _instance.getYears().get(year).getRaces().get(key)
 					.getParticipants().size());
 		}
 		return tmp;
+	}
+
+	public HashMap<String, Integer> averageTime(String year) {
+		HashMap<String, Integer> tmp = new HashMap<String, Integer>();
+		long tmpSum = 0;
+		int nbPart = 0;
+		for (String key : _instance.getYears().get(year).getRaces().keySet()) {
+			for (Results r : _instance.getYears().get(year).getRaces().get(key)
+					.getParticipants().values()) {
+				tmpSum += r.getTime();
+				nbPart += 1;
+			}
+			tmp.put(key, (int)(tmpSum / nbPart));
+			tmpSum = 0;
+			nbPart = 0;
+		}
+		return tmp;
+	}
+	
+	public static String formatTime(int time) {
+		StringBuilder strb = new StringBuilder();
+		int h, m, s, cs;
+		
+		h = (time - (time % 360000)) / 360000;
+		time -= h * 360000;
+		m = (time - (time % 6000)) / 6000;
+		time -= m * 6000;
+		s = (time - (time % 100)) / 100;
+		time -= s * 100;
+		cs = time;
+		
+		if (0 < h)
+			strb.append(h + ":");
+		
+		if (10 > m)
+			strb.append("0");
+		strb.append(m + ".");
+		
+		if (10 > s)
+			strb.append("0");
+		strb.append(s + ",");
+		
+		if (10 > cs)
+			strb.append("0");
+		strb.append(cs);
+		
+		return strb.toString();
 	}
 }
