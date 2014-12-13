@@ -123,7 +123,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener {
 		tabs.setFont(FONT);
 
 		// Tab results
-		resultsPanel = new ResultsPanel();
+		resultsPanel = new ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
 		tabs.addTab("Results", resultsPanel);
 
 		// Tab stats
