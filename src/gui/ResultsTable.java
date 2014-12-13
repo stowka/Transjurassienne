@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
+import data.DataManager;
 import app.Results;
 import app.Skier;
 
@@ -12,7 +13,7 @@ public class ResultsTable extends AbstractTableModel {
 	HashMap<Skier, Results> hm;
 	Object[][] data;
 	String[] columnTitles = { "#", "Name", "Birth year", "Club", "Time",
-			"Category ranking", "Country" };
+			"Category rank", "Country" };
 
 	public ResultsTable(HashMap<Skier, Results> _data) {
 		hm = _data;
@@ -25,7 +26,7 @@ public class ResultsTable extends AbstractTableModel {
 			data[n][1] = s.getName();
 			data[n][2] = s.getBirthYear();
 			data[n][3] = s.getClub();
-			data[n][4] = r.getTime();
+			data[n][4] = DataManager.formatTime(r.getTime());
 			data[n][5] = r.getCategoryRank();
 			data[n][6] = s.getNationality();
 			n += 1;
@@ -48,6 +49,6 @@ public class ResultsTable extends AbstractTableModel {
 	}
 
 	public String getColumnName(int col) {
-		return this.columnTitles[col];
+		return columnTitles[col];
 	}
 }

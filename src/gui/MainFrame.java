@@ -8,11 +8,11 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import app.Race;
+import app.Year;
 import data.DataManager;
 
 @SuppressWarnings("serial")
@@ -21,21 +21,23 @@ public class MainFrame extends JFrame implements KeyListener {
 	private JPanel resultsPanel;
 	private JPanel statsPanel;
 	private JPanel graphsPanel;
-	
+
 	private Menu menu;
 
 	private JTextField searchField;
 
 	private JTabbedPane tabs;
 
-	private final static Font FONT = new Font("Lato", Font.PLAIN, 12);
+	private Year currentYear;
+
+	final static Font FONT = new Font("Lato", Font.PLAIN, 12);
 
 	public MainFrame() {
 		super("Trans-Jurassienne | BŽligat et De Gieter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
-		
+
 		// Set menu
 		menu = new Menu();
 		setJMenuBar(menu);
@@ -45,6 +47,8 @@ public class MainFrame extends JFrame implements KeyListener {
 
 		// Add northPannel to the main panel
 		northPanel = new NorthPanel();
+		currentYear = DataManager.getInstance().getYears()
+				.get(northPanel.getSelectedYear());
 		northPanel.setDataListener(new DataListener() {
 			public void dataEmitted(DataEvent e) {
 				System.out.println("Year : " + e.getYear()
@@ -59,9 +63,9 @@ public class MainFrame extends JFrame implements KeyListener {
 		tabs.setFont(FONT);
 
 		// Tab results
-		// resultsPanel = new
-		// ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
-		tabs.addTab("Results", new JScrollPane(resultsPanel));
+		resultsPanel = new ResultsPanel(currentYear.getRaces()
+				.get(northPanel.getSelectedRace()).getParticipants());
+		tabs.addTab("Results", resultsPanel);
 
 		// Tab stats
 		statsPanel = new StatsPanel();

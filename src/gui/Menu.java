@@ -13,11 +13,18 @@ public class Menu extends JMenuBar {
 	public Menu() {
 		super();
 		file = new JMenu("File");
+		file.setFont(MainFrame.FONT);
 		help = new JMenu("?");
+		help.setFont(MainFrame.FONT);
+		
 		open = new JMenuItem("Open");
+		open.setFont(MainFrame.FONT);
 		delete = new JMenuItem("Delete");
+		delete.setFont(MainFrame.FONT);
 		close = new JMenuItem("Close");
+		close.setFont(MainFrame.FONT);
 		credits = new JMenuItem("Credits");
+		credits.setFont(MainFrame.FONT);
 		
 		file.add(open);
 		file.add(delete);

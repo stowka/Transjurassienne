@@ -25,15 +25,23 @@ public class NorthPanel extends JPanel implements ActionListener {
 	private JTextField search;
 	private JButton searchBtn;
 	private DataListener listener;
+	
+	private String[] yearsString;
+	private String[] raceCategoryString = {"25CTF", "25CTM", "25FTF", "25FTM",
+			"50CTF", "50CTM", "76FTF", "76FTM"};
 
 	public NorthPanel() {
 		super();
 
 		yearLabel = new JLabel("Year : ");
+		yearLabel.setFont(MainFrame.FONT);
 		raceCatLabel = new JLabel("Category : ");
+		raceCatLabel.setFont(MainFrame.FONT);
 		searchFieldLabel = new JLabel("Search : ");
+		searchFieldLabel.setFont(MainFrame.FONT);
 		search = new JTextField(15);
-		searchBtn = new JButton("Ok");
+		searchBtn = new JButton("OK");
+		searchBtn.setFont(MainFrame.FONT);
 
 		// Set up the pannel
 		setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -46,7 +54,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 		add(yearLabel, this);
 
 		// Set up the year ComboBox
-		String[] yearsString = new String[DataManager.getInstance().getYears()
+		yearsString = new String[DataManager.getInstance().getYears()
 				.size()];
 		int it = 0;
 		for (String y : DataManager.getInstance().getYears().keySet()) {
@@ -55,6 +63,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 		}
 		Arrays.sort(yearsString);
 		year = new JComboBox(yearsString);
+		year.setFont(MainFrame.FONT);
 		year.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		year.addActionListener(this);
 		add(year, this);
@@ -64,9 +73,8 @@ public class NorthPanel extends JPanel implements ActionListener {
 		add(raceCatLabel, this);
 
 		// Set up the raceCat ComboBox
-		String[] raceCategoryString = { "25CTF", "25CTM", "25FTF", "25FTM",
-				"50CTF", "50CTM", "76FTF", "76FTM" };
 		raceCat = new JComboBox(raceCategoryString);
+		raceCat.setFont(MainFrame.FONT);
 		raceCat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		raceCat.addActionListener(this);
 		add(raceCat, this);
@@ -84,20 +92,29 @@ public class NorthPanel extends JPanel implements ActionListener {
 		searchBtn.addActionListener(this);
 		add(searchBtn, this);
 	}
-	
+
 	public void setDataListener(DataListener listener) {
 		this.listener = listener;
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
-		if(listener != null) {
+		if (listener != null) {
 			String yearData = (String) year.getSelectedItem();
 			String raceCatData = (String) raceCat.getSelectedItem();
 			String searchData = search.getText();
-			
-			DataEvent dataEvent = new DataEvent(yearData, raceCatData, searchData);
-			
+
+			DataEvent dataEvent = new DataEvent(yearData, raceCatData,
+					searchData);
+
 			listener.dataEmitted(dataEvent);
 		}
+	}
+	
+	public String getSelectedYear() {
+		return yearsString[year.getSelectedIndex()];
+	}
+	
+	public String getSelectedRace() {
+		return raceCategoryString[raceCat.getSelectedIndex()];
 	}
 }
