@@ -33,8 +33,6 @@ public class MainFrame extends JFrame implements KeyListener {
 
 	private JTextField searchField;
 
-	private JButton searchButton;
-
 	private JTabbedPane tabs;
 
 	private final static Font FONT = new Font("Lato", Font.PLAIN, 12);
@@ -50,6 +48,13 @@ public class MainFrame extends JFrame implements KeyListener {
 
 		// Add northPannel to the main panel
 		northPanel = new NorthPanel();
+		northPanel.setDataListener(new DataListener() {
+			public void dataEmitted(DataEvent e) {
+				System.out.println("Year : " + e.getYear()
+						+ "\nRace Category : " + e.getRaceCat()
+						+ "\nSearch Pattern : " + e.getSearch());
+			}
+		});
 		add(northPanel, BorderLayout.NORTH);
 
 		// Set up tabbed pane
@@ -57,7 +62,8 @@ public class MainFrame extends JFrame implements KeyListener {
 		tabs.setFont(FONT);
 
 		// Tab results
-		//resultsPanel = new ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
+		// resultsPanel = new
+		// ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
 		tabs.addTab("Results", new JScrollPane(resultsPanel));
 
 		// Tab stats
@@ -80,24 +86,20 @@ public class MainFrame extends JFrame implements KeyListener {
 		// TODO
 	}
 
-	/*@Override
-	public void actionPerformed(ActionEvent event) {
-		// TODO
-
-
-		if (event.getSource() == raceCategory) {
-			System.out.println("Changed category: "
-					+ raceCategory.getSelectedItem());
-		}
-
-		if (event.getSource() == year) {
-			System.out.println("Changed year: " + year.getSelectedItem());
-		}
-
-		if (event.getSource() == searchButton) {
-			search(searchField.getText().replace(' ', '+'));
-		}
-	}*/
+	/*
+	 * @Override public void actionPerformed(ActionEvent event) { // TODO
+	 * 
+	 * 
+	 * if (event.getSource() == raceCategory) {
+	 * System.out.println("Changed category: " +
+	 * raceCategory.getSelectedItem()); }
+	 * 
+	 * if (event.getSource() == year) { System.out.println("Changed year: " +
+	 * year.getSelectedItem()); }
+	 * 
+	 * if (event.getSource() == searchButton) {
+	 * search(searchField.getText().replace(' ', '+')); } }
+	 */
 
 	private void search(String pattern) {
 		System.out.println("Search pattern: " + pattern);

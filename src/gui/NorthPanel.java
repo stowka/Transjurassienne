@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
@@ -14,7 +16,7 @@ import javax.swing.border.Border;
 import data.DataManager;
 
 @SuppressWarnings("serial")
-public class NorthPanel extends JPanel {
+public class NorthPanel extends JPanel implements ActionListener {
 	private JLabel yearLabel;
 	private JLabel raceCatLabel;
 	private JLabel searchFieldLabel;
@@ -22,6 +24,7 @@ public class NorthPanel extends JPanel {
 	private JComboBox year;
 	private JTextField search;
 	private JButton searchBtn;
+	private DataListener listener;
 
 	public NorthPanel() {
 		super();
@@ -33,7 +36,7 @@ public class NorthPanel extends JPanel {
 		searchBtn = new JButton("Ok");
 
 		// Set up the pannel
-		setLayout(new FlowLayout(FlowLayout.LEFT));
+		setLayout(new FlowLayout(FlowLayout.CENTER));
 		Border outter = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		Border inner = BorderFactory.createEtchedBorder();
 		setBorder(BorderFactory.createCompoundBorder(outter, inner));
@@ -53,6 +56,7 @@ public class NorthPanel extends JPanel {
 		Arrays.sort(yearsString);
 		year = new JComboBox(yearsString);
 		year.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
+		year.addActionListener(this);
 		add(year, this);
 
 		// Set up the raceCatLabel
@@ -64,6 +68,7 @@ public class NorthPanel extends JPanel {
 				"50CTF", "50CTM", "76FTF", "76FTM" };
 		raceCat = new JComboBox(raceCategoryString);
 		raceCat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
+		raceCat.addActionListener(this);
 		add(raceCat, this);
 
 		// Set up the searchFieldLabel
@@ -76,6 +81,23 @@ public class NorthPanel extends JPanel {
 		
 		// Set up the search button
 		//searchBtn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+		searchBtn.addActionListener(this);
 		add(searchBtn, this);
+	}
+	
+	public void setDataListener(DataListener listener) {
+		this.listener = listener;
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(listener != null) {
+			String yearData = (String) year.getSelectedItem();
+			String raceCatData = (String) raceCat.getSelectedItem();
+			String searchData = search.getText();
+			
+			DataEvent dataEvent = new DataEvent(yearData, raceCatData, searchData);
+			
+			listener.dataEmitted(dataEvent);
+		}
 	}
 }
