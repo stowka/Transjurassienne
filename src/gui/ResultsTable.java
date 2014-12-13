@@ -19,7 +19,7 @@ public class ResultsTable extends AbstractTableModel {
 		data = new Object[hm.size()][7];
 		Results r;
 		int n = 0;
-		for(Skier s : hm.keySet()) {
+		for (Skier s : hm.keySet()) {
 			r = hm.get(s);
 			data[n][0] = r.getRank();
 			data[n][1] = s.getName();
@@ -47,4 +47,7 @@ public class ResultsTable extends AbstractTableModel {
 		return data[row][col];
 	}
 
+	public String getColumnName(int col) {
+		return this.columnTitles[col];
+	}
 }

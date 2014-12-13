@@ -124,7 +124,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener {
 
 		// Tab results
 		resultsPanel = new ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
-		tabs.addTab("Results", resultsPanel);
+		tabs.addTab("Results", new JScrollPane(resultsPanel));
 
 		// Tab stats
 		statsPanel = new StatsPanel();
