@@ -25,105 +25,39 @@ import app.Year;
 import data.DataManager;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements ActionListener, KeyListener {
-	private JPanel mainPanel;
-	private JPanel northPanel;
+public class MainFrame extends JFrame implements KeyListener {
+	private NorthPanel northPanel;
 	private JPanel resultsPanel;
 	private JPanel statsPanel;
 	private JPanel graphsPanel;
 
-	private JLabel yearLabel;
-	private JLabel raceCategoryLabel;
-	private JLabel nbParticipantsLabel;
-	private JLabel averageTimeLabel;
-	private JLabel nbParticipants;
-
-	private JLabel averageTime;
 	private JTextField searchField;
 
 	private JButton searchButton;
-
-	private JComboBox year;
-	private JComboBox raceCategory;
-	
-	private Year currentYear;
 
 	private JTabbedPane tabs;
 
 	private final static Font FONT = new Font("Lato", Font.PLAIN, 12);
 
 	public MainFrame() {
-		setTitle("Trans-Jurassienne Ñ BŽligat und De Gieter, das gelbe vom ei!");
+		super("Trans-Jurassienne | BÃ©ligat et De Gieter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		;
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
-		// setSize(new Dimension(getWidth(), getHeight()));
 		setSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
 
 		// Set the main panel with a border layout
-		mainPanel = new JPanel();
-		setContentPane(mainPanel);
-		mainPanel.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 
-		// NorthPannel with gridLayout
-		northPanel = new JPanel();
-		mainPanel.add(northPanel, BorderLayout.NORTH);
-
-		// Year label
-		yearLabel = new JLabel("Year : ");
-		yearLabel.setFont(FONT);
-		northPanel.add(yearLabel);
-
-		// Year ComboBox
-		String[] yearsString = new String[DataManager.getInstance().getYears()
-				.size()];
-		int it = 0;
-		for (String y : DataManager.getInstance().getYears().keySet()) {
-			yearsString[it] = y;
-			it += 1;
-		}
-		Arrays.sort(yearsString);
-		currentYear = DataManager.getInstance().getYears().get(yearsString[0]);
-		year = new JComboBox(yearsString);
-		year.setFont(FONT);
-		year.addActionListener(this);
-		northPanel.add(year);
-
-		// Race Category Label
-		raceCategoryLabel = new JLabel("Race category : ");
-		raceCategoryLabel.setFont(FONT);
-		raceCategoryLabel.setLocation(new Point(raceCategoryLabel.getX() + 100,
-				raceCategoryLabel.getY()));
-		northPanel.add(raceCategoryLabel);
-
-		// Race Category ComboBox
-		String[] raceCategoryString = { "25CTF", "25CTM", "25FTF", "25FTM",
-				"50CTF", "50CTM", "76FTF", "76FTM" };
-		raceCategory = new JComboBox(raceCategoryString);
-		raceCategory.setFont(FONT);
-		raceCategory.addActionListener(this);
-		northPanel.add(raceCategory);
-
-		// Search component
-		searchField = new JTextField();
-		searchField.setForeground(Color.GRAY);
-		searchField.setFont(new Font("Andale Mono", Font.ITALIC, 12));
-		searchField.setColumns(18);
-		searchField.addKeyListener(this);
-		northPanel.add(searchField);
-
-		searchButton = new JButton("Search");
-		searchButton.setFont(FONT);
-		searchButton.addActionListener(this);
-		northPanel.add(searchButton);
+		// Add northPannel to the main panel
+		northPanel = new NorthPanel();
+		add(northPanel, BorderLayout.NORTH);
 
 		// Set up tabbed pane
 		tabs = new JTabbedPane();
 		tabs.setFont(FONT);
 
 		// Tab results
-		resultsPanel = new ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
+		//resultsPanel = new ResultsPanel(currentYear.getRaces().get(raceCategoryString[0]).getParticipants());
 		tabs.addTab("Results", new JScrollPane(resultsPanel));
 
 		// Tab stats
@@ -134,7 +68,7 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener {
 		graphsPanel = new GraphsPanel();
 		tabs.addTab("Graphics", graphsPanel);
 
-		mainPanel.add(tabs, BorderLayout.CENTER);
+		add(tabs, BorderLayout.CENTER);
 
 		setVisible(true);
 	}
@@ -146,13 +80,11 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener {
 		// TODO
 	}
 
-	@Override
+	/*@Override
 	public void actionPerformed(ActionEvent event) {
 		// TODO
 
-		/*
-		 * JComboBox: action performed on year/category change:
-		 */
+
 		if (event.getSource() == raceCategory) {
 			System.out.println("Changed category: "
 					+ raceCategory.getSelectedItem());
@@ -162,13 +94,10 @@ public class MainFrame extends JFrame implements ActionListener, KeyListener {
 			System.out.println("Changed year: " + year.getSelectedItem());
 		}
 
-		/*
-		 * JButton: action performed on search button click:
-		 */
 		if (event.getSource() == searchButton) {
 			search(searchField.getText().replace(' ', '+'));
 		}
-	}
+	}*/
 
 	private void search(String pattern) {
 		System.out.println("Search pattern: " + pattern);
