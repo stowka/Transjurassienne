@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import data.DataManager;
+import event.DataEvent;
+import event.DataListener;
+import event.Key;
 
 @SuppressWarnings("serial")
 public class NorthPanel extends JPanel implements ActionListener {
@@ -22,7 +25,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 	private JLabel searchFieldLabel;
 	private JComboBox raceCat;
 	private JComboBox year;
-	private JTextField search;
+	private JTextField searchField;
 	private JButton searchBtn;
 	private DataListener listener;
 	
@@ -35,11 +38,16 @@ public class NorthPanel extends JPanel implements ActionListener {
 
 		yearLabel = new JLabel("Year : ");
 		yearLabel.setFont(MainFrame.FONT);
+		
 		raceCatLabel = new JLabel("Category : ");
 		raceCatLabel.setFont(MainFrame.FONT);
+		
 		searchFieldLabel = new JLabel("Search : ");
 		searchFieldLabel.setFont(MainFrame.FONT);
-		search = new JTextField(15);
+		searchField = new JTextField(15);
+		searchField.addKeyListener(Key.getInstance());
+		searchField.setFont(MainFrame.FONT);
+		
 		searchBtn = new JButton("OK");
 		searchBtn.setFont(MainFrame.FONT);
 
@@ -63,6 +71,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 		}
 		Arrays.sort(yearsString);
 		year = new JComboBox(yearsString);
+		year.setName("year");
 		year.setFont(MainFrame.FONT);
 		year.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		year.addActionListener(this);
@@ -74,6 +83,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 
 		// Set up the raceCat ComboBox
 		raceCat = new JComboBox(raceCategoryString);
+		raceCat.setName("race");
 		raceCat.setFont(MainFrame.FONT);
 		raceCat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		raceCat.addActionListener(this);
@@ -84,8 +94,8 @@ public class NorthPanel extends JPanel implements ActionListener {
 		add(searchFieldLabel, this);
 
 		// Set up the search TextField
-		search.setBorder(BorderFactory.createEtchedBorder());
-		add(search, this);
+		searchField.setBorder(BorderFactory.createEtchedBorder());
+		add(searchField, this);
 		
 		// Set up the search button
 		//searchBtn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
@@ -101,7 +111,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 		if (listener != null) {
 			String yearData = (String) year.getSelectedItem();
 			String raceCatData = (String) raceCat.getSelectedItem();
-			String searchData = search.getText();
+			String searchData = searchField.getText();
 
 			DataEvent dataEvent = new DataEvent(yearData, raceCatData,
 					searchData);

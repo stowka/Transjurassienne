@@ -3,29 +3,25 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
 import app.Race;
 import app.Year;
 import data.DataManager;
+import event.DataEvent;
+import event.DataListener;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements KeyListener {
+public class MainFrame extends JFrame {
 	private NorthPanel northPanel;
 	private JPanel resultsPanel;
 	private JPanel statsPanel;
 	private JPanel graphsPanel;
 
 	private Menu menu;
-
-	private JTextField searchField;
-
 	private JTabbedPane tabs;
 
 	private Year currentYear;
@@ -102,24 +98,8 @@ public class MainFrame extends JFrame implements KeyListener {
 	 * search(searchField.getText().replace(' ', '+')); } }
 	 */
 
-	private void search(String pattern) {
+	public static void search(String pattern) {
 		System.out.println("Search pattern: " + pattern);
 		// TODO
-	}
-
-	@Override
-	public void keyPressed(KeyEvent event) {
-		if (event.getSource() == searchField
-				&& event.getKeyCode() == KeyEvent.VK_ENTER) {
-			search(searchField.getText().replace(' ', '+'));
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent event) {
-	}
-
-	@Override
-	public void keyTyped(KeyEvent event) {
 	}
 }

@@ -1,4 +1,4 @@
-package gui;
+package event;
 
 public class DataEvent {
 	private String year;
