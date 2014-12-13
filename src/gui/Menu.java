@@ -28,4 +28,32 @@ public class Menu extends JMenuBar {
 		add(file);
 		add(help);
 	}
+
+	/**
+	 * @return the open
+	 */
+	public JMenuItem getOpen() {
+		return open;
+	}
+
+	/**
+	 * @return the delete
+	 */
+	public JMenuItem getDelete() {
+		return delete;
+	}
+
+	/**
+	 * @return the close
+	 */
+	public JMenuItem getClose() {
+		return close;
+	}
+
+	/**
+	 * @return the credits
+	 */
+	public JMenuItem getCredits() {
+		return credits;
+	}
 }

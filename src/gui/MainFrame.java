@@ -21,6 +21,8 @@ public class MainFrame extends JFrame implements KeyListener {
 	private JPanel resultsPanel;
 	private JPanel statsPanel;
 	private JPanel graphsPanel;
+	
+	private Menu menu;
 
 	private JTextField searchField;
 
@@ -35,7 +37,8 @@ public class MainFrame extends JFrame implements KeyListener {
 		setLocationRelativeTo(null);
 		
 		// Set menu
-		setJMenuBar(new Menu());
+		menu = new Menu();
+		setJMenuBar(menu);
 
 		// Set the main panel with a border layout
 		setLayout(new BorderLayout());
