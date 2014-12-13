@@ -33,6 +33,9 @@ public class MainFrame extends JFrame implements KeyListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
+		
+		// Set menu
+		setJMenuBar(new Menu());
 
 		// Set the main panel with a border layout
 		setLayout(new BorderLayout());
