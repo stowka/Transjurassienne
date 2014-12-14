@@ -16,7 +16,7 @@ public class DataManager {
 	private HashMap<String, Year> years;
 
 	private final static String PATH_TO_FILES = "./assets/csv/";
-	private final static String REGEX_MATCHING_FILES = "201[12].csv";
+	private final static String REGEX_MATCHING_FILES = "201[1234].csv";
 
 	private static DataManager _instance = null;
 
@@ -56,30 +56,40 @@ public class DataManager {
 
 				for (HashMap<String, String> entry : data) { // browse entries
 
-					name = entry.get("Nom");
-					birthYear = Integer.parseInt(entry.get("Naissance"));
-					club = entry.get("Club");
-					nationality = entry.get("Nation");
-					category = entry.get("Nom_Categorie");
-					rank = Integer.parseInt(entry.get("Classement"));
-					categoryRank = Integer
-							.parseInt(entry.get("Classement_cat"));
-					time = entry.get("Arrivee");
+					if (!entry.get("Nom").isEmpty()
+							&& !entry.get("Nation").isEmpty()
+							&& !(null == entry.get("Course"))
+							&& !entry.get("Naissance").isEmpty()) {
+						name = entry.get("Nom");
+						try {
+							birthYear = Integer
+									.parseInt(entry.get("Naissance"));
+						} catch (NumberFormatException e) {
+							birthYear = 0;
+						}
+						club = entry.get("Club");
+						nationality = entry.get("Nation");
+						category = entry.get("Nom_Categorie");
+						rank = Integer.parseInt(entry.get("Classement"));
+						categoryRank = Integer.parseInt(entry
+								.get("Classement_cat"));
+						time = entry.get("Arrivee");
 
-					if ('F' == entry.get("Course").charAt(
-							entry.get("Course").length() - 1))
-						tmpSkier = new SkierFemale(name, birthYear, club,
-								nationality, category);
-					else
-						tmpSkier = new SkierMale(name, birthYear, club,
-								nationality, category);
+						if ('F' == entry.get("Course").charAt(
+								entry.get("Course").length() - 1))
+							tmpSkier = new SkierFemale(name, birthYear, club,
+									nationality, category);
+						else
+							tmpSkier = new SkierMale(name, birthYear, club,
+									nationality, category);
 
-					tmpResults = new Results(rank, categoryRank, time);
+						tmpResults = new Results(rank, categoryRank, time);
 
-					tmpYear.getRaces().get(entry.get("Course"))
-							.addParticipant(tmpSkier, tmpResults);
+						tmpYear.getRaces().get(entry.get("Course"))
+								.addParticipant(tmpSkier, tmpResults);
 
-					skiers.add(tmpSkier);
+						skiers.add(tmpSkier);
+					}
 				}
 			}
 		}
@@ -118,17 +128,17 @@ public class DataManager {
 				tmpSum += r.getTime();
 				nbPart += 1;
 			}
-			tmp.put(key, (int)(tmpSum / nbPart));
+			tmp.put(key, (int) (tmpSum / nbPart));
 			tmpSum = 0;
 			nbPart = 0;
 		}
 		return tmp;
 	}
-	
+
 	public static String formatTime(int time) {
 		StringBuilder strb = new StringBuilder();
 		int h, m, s, cs;
-		
+
 		h = (time - (time % 360000)) / 360000;
 		time -= h * 360000;
 		m = (time - (time % 6000)) / 6000;
@@ -136,22 +146,22 @@ public class DataManager {
 		s = (time - (time % 100)) / 100;
 		time -= s * 100;
 		cs = time;
-		
+
 		if (0 < h)
 			strb.append(h + ":");
-		
+
 		if (10 > m)
 			strb.append("0");
 		strb.append(m + ".");
-		
+
 		if (10 > s)
 			strb.append("0");
 		strb.append(s + ",");
-		
+
 		if (10 > cs)
 			strb.append("0");
 		strb.append(cs);
-		
+
 		return strb.toString();
 	}
 }
