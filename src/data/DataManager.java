@@ -51,7 +51,6 @@ public class DataManager {
 			if (child.getName().matches(REGEX_MATCHING_FILES)) {
 				tmpYear = new Year(Integer.parseInt(child.getName().substring(
 						0, 4)));
-				years.put(child.getName().substring(0, 4), tmpYear);
 				data = CSVParser.parse(child);
 
 				for (HashMap<String, String> entry : data) { // browse entries
@@ -91,6 +90,7 @@ public class DataManager {
 						skiers.add(tmpSkier);
 					}
 				}
+				years.put(child.getName().substring(0, 4), tmpYear);
 			}
 		}
 	}
