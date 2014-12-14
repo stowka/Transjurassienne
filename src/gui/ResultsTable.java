@@ -30,7 +30,7 @@ public class ResultsTable extends AbstractTableModel {
 			data[n][3] = s.getClub();
 			data[n][4] = DataManager.formatTime(r.getTime());
 			data[n][5] = r.getCategoryRank();
-			data[n][6] = new ImageIcon(PATH_TO_IMG + s.getNationality().substring(0, 2).toLowerCase() + ".gif");
+			data[n][6] = new ImageIcon(PATH_TO_IMG + s.getNationality().toLowerCase() + ".gif");
 			System.out.println(r.getRank() + " " + s.getNationality());
 			n += 1;
 		}

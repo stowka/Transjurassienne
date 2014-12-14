@@ -100,6 +100,5 @@ public class MainFrame extends JFrame {
 
 	public static void search(String pattern) {
 		System.out.println("Search pattern: " + pattern);
-		// TODO
 	}
 }

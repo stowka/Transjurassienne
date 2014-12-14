@@ -117,6 +117,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 					searchData);
 
 			listener.dataEmitted(dataEvent);
+			
 		}
 	}
 	
