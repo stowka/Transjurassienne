@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.util.HashMap;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

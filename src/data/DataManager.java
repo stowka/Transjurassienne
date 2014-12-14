@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
+import app.Race;
 import app.Results;
 import app.Skier;
 import app.SkierFemale;
@@ -133,6 +134,40 @@ public class DataManager {
 			nbPart = 0;
 		}
 		return tmp;
+	}
+
+	public String averageTime(String year, String raceCat) {
+		long tmpSum = 0;
+		int nbPart = 0;
+		Race tmp = _instance.getYears().get(year).getRaces().get(raceCat);
+		for (Results r : tmp.getParticipants().values()) {
+			tmpSum += r.getTime();
+			nbPart++;
+		}
+		tmpSum /= nbPart;
+		return formatTime((int) tmpSum);
+	}
+
+	public int nbCountry(String year, String raceCat) {
+		TreeSet<String> nationality = new TreeSet<String>();
+		for (Skier skier : _instance.getYears().get(year).getRaces()
+				.get(raceCat).getParticipants().keySet()) {
+			nationality.add(skier.getNationality());
+		}
+		return nationality.size();
+	}
+
+	public String gapTime(String year, String raceCat) {
+		int longestTime = 0;
+		int shortestTime = 0;
+
+		for (Results result : _instance.getYears().get(year).getRaces()
+				.get(raceCat).getParticipants().values()) {
+			int current = result.getTime();
+			longestTime = (longestTime == 0 || longestTime < current) ? current : longestTime;
+			shortestTime = (shortestTime == 0 || shortestTime > current) ? current : longestTime;
+		}
+		return formatTime(longestTime - shortestTime);
 	}
 
 	public static String formatTime(int time) {

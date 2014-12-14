@@ -24,11 +24,12 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabs;
 
 	private Year currentYear;
+	private String raceCat;
 
 	final static Font FONT = new Font("Lato", Font.PLAIN, 12);
 
 	public MainFrame() {
-		super("Trans-Jurassienne | BŽligat et De Gieter");
+		super("Trans-Jurassienne | Bï¿½ligat et De Gieter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
@@ -48,11 +49,12 @@ public class MainFrame extends JFrame {
 		northPanel = new NorthPanel();
 		currentYear = DataManager.getInstance().getYears()
 				.get(northPanel.getSelectedYear());
+		raceCat = northPanel.getSelectedRace();
 		northPanel.setDataListener(new DataListener() {
 			public void dataEmitted(DataEvent e) {
 				currentYear = DataManager.getInstance().getYears().get(e.getYear());
 				resultsPanel = new ResultsPanel(currentYear.getRaces().get(e.getRaceCat()).getParticipants());
-				statsPanel = new StatsPanel(currentYear);
+				statsPanel = new StatsPanel(currentYear, e.getRaceCat());
 				graphsPanel = new GraphsPanel(currentYear);
 				
 				tabs.removeTabAt(0);
@@ -72,7 +74,7 @@ public class MainFrame extends JFrame {
 		tabs.addTab("Results", resultsPanel);
 
 		// Tab stats
-		statsPanel = new StatsPanel(currentYear);
+		statsPanel = new StatsPanel(currentYear, raceCat);
 		tabs.addTab("Stats", statsPanel);
 
 		// Tab graphs
