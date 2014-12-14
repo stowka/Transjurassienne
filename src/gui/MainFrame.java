@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import app.Race;
 import app.Year;
 import data.DataManager;
 import event.DataEvent;
@@ -38,6 +37,10 @@ public class MainFrame extends JFrame {
 		menu = new Menu();
 		setJMenuBar(menu);
 
+		// Set up tabbed pane
+		tabs = new JTabbedPane();
+		tabs.setFont(FONT);
+		
 		// Set the main panel with a border layout
 		setLayout(new BorderLayout());
 
@@ -47,16 +50,21 @@ public class MainFrame extends JFrame {
 				.get(northPanel.getSelectedYear());
 		northPanel.setDataListener(new DataListener() {
 			public void dataEmitted(DataEvent e) {
-				System.out.println("Year : " + e.getYear()
-						+ "\nRace Category : " + e.getRaceCat()
-						+ "\nSearch Pattern : " + e.getSearch());
+				currentYear = DataManager.getInstance().getYears().get(e.getYear());
+				resultsPanel = new ResultsPanel(currentYear.getRaces().get(e.getRaceCat()).getParticipants());
+				statsPanel = new StatsPanel(currentYear);
+				graphsPanel = new GraphsPanel(currentYear);
+				
+				tabs.removeTabAt(0);
+				tabs.removeTabAt(0);
+				tabs.removeTabAt(0);
+				
+				tabs.addTab("Results", resultsPanel);
+				tabs.addTab("Stats", statsPanel);
+				tabs.addTab("Graphs", graphsPanel);
 			}
 		});
 		add(northPanel, BorderLayout.NORTH);
-
-		// Set up tabbed pane
-		tabs = new JTabbedPane();
-		tabs.setFont(FONT);
 
 		// Tab results
 		resultsPanel = new ResultsPanel(currentYear.getRaces()
@@ -64,39 +72,17 @@ public class MainFrame extends JFrame {
 		tabs.addTab("Results", resultsPanel);
 
 		// Tab stats
-		statsPanel = new StatsPanel();
+		statsPanel = new StatsPanel(currentYear);
 		tabs.addTab("Stats", statsPanel);
 
 		// Tab graphs
-		graphsPanel = new GraphsPanel();
+		graphsPanel = new GraphsPanel(currentYear);
 		tabs.addTab("Graphics", graphsPanel);
 
 		add(tabs, BorderLayout.CENTER);
 
 		setVisible(true);
 	}
-
-	@SuppressWarnings("unused")
-	private void fillResult(String year, String category) {
-		Race race = DataManager.getInstance().getYears().get(year).getRaces()
-				.get(category);
-		// TODO
-	}
-
-	/*
-	 * @Override public void actionPerformed(ActionEvent event) { // TODO
-	 * 
-	 * 
-	 * if (event.getSource() == raceCategory) {
-	 * System.out.println("Changed category: " +
-	 * raceCategory.getSelectedItem()); }
-	 * 
-	 * if (event.getSource() == year) { System.out.println("Changed year: " +
-	 * year.getSelectedItem()); }
-	 * 
-	 * if (event.getSource() == searchButton) {
-	 * search(searchField.getText().replace(' ', '+')); } }
-	 */
 
 	public static void search(String pattern) {
 		System.out.println("Search pattern: " + pattern);

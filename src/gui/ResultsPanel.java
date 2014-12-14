@@ -17,7 +17,7 @@ import app.Skier;
 @SuppressWarnings("serial")
 public class ResultsPanel extends JPanel {
 	private JTable table;
-	
+
 	public ResultsPanel(HashMap<Skier, Results> data) {
 		super();
 		setLayout(new GridLayout(1, 1));
@@ -29,22 +29,22 @@ public class ResultsPanel extends JPanel {
 		table.getColumn("Time").setPreferredWidth(400);
 		table.getColumn("Category rank").setPreferredWidth(400);
 		table.getColumn("Country").setPreferredWidth(200);
-		
+
 		table.setAutoCreateRowSorter(true);
 		table.setColumnSelectionAllowed(false);
 		table.setFont(MainFrame.FONT);
-		
+
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		
+
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		JTableHeader header = table.getTableHeader();
 		header.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		
+
 		table.setDefaultRenderer(Integer.class, centerRenderer);
 		add(new JScrollPane(table));
 	}
-	
+
 	public void setData(HashMap<Skier, Results> data) {
 		this.table = new JTable(new ResultsTable(data));
 	}
