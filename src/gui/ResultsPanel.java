@@ -2,13 +2,17 @@ package gui;
 
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JButton;
+import javax.swing.DefaultRowSorter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
@@ -36,11 +40,18 @@ public class ResultsPanel extends JPanel {
 		table.setFont(MainFrame.FONT);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
 		JTableHeader header = table.getTableHeader();
 		header.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		header.setReorderingAllowed(false);
+		
+		table.setAutoCreateRowSorter(true);
+        DefaultRowSorter<?, ?> sorter = ((DefaultRowSorter<?, ?>)table.getRowSorter()); 
+        ArrayList<SortKey> list = new ArrayList<SortKey>();
+        list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(list);
+        sorter.sort();
 
 		table.setDefaultRenderer(Integer.class, centerRenderer);
 		add(new JScrollPane(table));
