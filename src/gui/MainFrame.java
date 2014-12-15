@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
 	final static Font FONT = new Font("Lato", Font.PLAIN, 12);
 
 	public MainFrame() {
-		super("Trans-Jurassienne | Béligat et De Gieter");
+		super("Trans-Jurassienne | Beligat et De Gieter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
