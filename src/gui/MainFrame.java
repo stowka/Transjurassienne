@@ -16,9 +16,9 @@ import event.DataListener;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	private NorthPanel northPanel;
-	private JPanel resultsPanel;
-	private JPanel statsPanel;
-	private JPanel graphsPanel;
+	private ResultsPanel resultsPanel;
+	private StatsPanel statsPanel;
+	private GraphsPanel graphsPanel;
 
 	private Menu menu;
 	private JTabbedPane tabs;
@@ -50,23 +50,6 @@ public class MainFrame extends JFrame {
 		currentYear = DataManager.getInstance().getYears()
 				.get(northPanel.getSelectedYear());
 		raceCat = northPanel.getSelectedRace();
-		northPanel.setDataListener(new DataListener() {
-			public void dataEmitted(DataEvent e) {
-				currentYear = DataManager.getInstance().getYears().get(e.getYear());
-				resultsPanel = new ResultsPanel(currentYear.getRaces().get(e.getRaceCat()).getParticipants());
-				statsPanel = new StatsPanel(currentYear, e.getRaceCat());
-				graphsPanel = new GraphsPanel(currentYear);
-				
-				tabs.removeTabAt(0);
-				tabs.removeTabAt(0);
-				tabs.removeTabAt(0);
-				
-				tabs.addTab("Results", resultsPanel);
-				tabs.addTab("Stats", statsPanel);
-				tabs.addTab("Graphs", graphsPanel);
-			}
-		});
-		add(northPanel, BorderLayout.NORTH);
 
 		// Tab results
 		resultsPanel = new ResultsPanel(currentYear.getRaces()
@@ -78,9 +61,21 @@ public class MainFrame extends JFrame {
 		tabs.addTab("Stats", statsPanel);
 
 		// Tab graphs
-		graphsPanel = new GraphsPanel(currentYear);
+		graphsPanel = new GraphsPanel(currentYear, raceCat);
 		tabs.addTab("Graphics", graphsPanel);
-
+		
+		northPanel.setDataListener(new DataListener() {
+			public void dataEmitted(DataEvent e) {
+				currentYear = DataManager.getInstance().getYears().get(e.getYear());
+				raceCat = e.getRaceCat();
+				
+				resultsPanel.updateField(currentYear.getRaces().get(raceCat).getParticipants());
+				statsPanel.updateField(currentYear, raceCat);
+				graphsPanel.updateField(currentYear, raceCat);
+			}
+		});
+		
+		add(northPanel, BorderLayout.NORTH);
 		add(tabs, BorderLayout.CENTER);
 
 		setVisible(true);

@@ -99,4 +99,11 @@ public class StatsPanel extends JPanel {
 		timeGap.setText(dm.gapTime(""+_year.getYear(), raceCat));
 		add(timeGap, gc);
 	}
+	
+	public void updateField(Year _year, String raceCat) {
+		nbParticipants.setText("" + dm.numberOfParticipants(""+_year.getYear(), raceCat));
+		averageTime.setText(dm.averageTime(""+_year.getYear(), raceCat));
+		nbOfCountry.setText("" + dm.nbCountry(""+_year.getYear(), raceCat));
+		timeGap.setText(dm.gapTime(""+_year.getYear(), raceCat));
+	}
 }
