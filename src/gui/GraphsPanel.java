@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import app.Year;
 
+@SuppressWarnings("serial")
 public class GraphsPanel extends JPanel {
 	Year year;
 	String raceCat;

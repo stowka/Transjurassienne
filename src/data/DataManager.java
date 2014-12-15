@@ -165,7 +165,7 @@ public class DataManager {
 				.get(raceCat).getParticipants().values()) {
 			int current = result.getTime();
 			longestTime = (longestTime == 0 || longestTime < current) ? current : longestTime;
-			shortestTime = (shortestTime == 0 || shortestTime > current) ? current : longestTime;
+			shortestTime = (shortestTime == 0 || shortestTime > current) ? current : shortestTime;
 		}
 		return formatTime(longestTime - shortestTime);
 	}

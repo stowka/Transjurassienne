@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import app.Year;
@@ -29,7 +28,7 @@ public class MainFrame extends JFrame {
 	final static Font FONT = new Font("Lato", Font.PLAIN, 12);
 
 	public MainFrame() {
-		super("Trans-Jurassienne | B�ligat et De Gieter");
+		super("Trans-Jurassienne | Béligat et De Gieter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
@@ -64,6 +63,7 @@ public class MainFrame extends JFrame {
 		graphsPanel = new GraphsPanel(currentYear, raceCat);
 		tabs.addTab("Graphics", graphsPanel);
 		
+		// Listening event from northPanel
 		northPanel.setDataListener(new DataListener() {
 			public void dataEmitted(DataEvent e) {
 				currentYear = DataManager.getInstance().getYears().get(e.getYear());
