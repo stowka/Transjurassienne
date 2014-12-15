@@ -156,18 +156,29 @@ public class DataManager {
 		}
 		return nationality.size();
 	}
-
-	public String gapTime(String year, String raceCat) {
-		int longestTime = 0;
+	
+	public int minTime(String year, String raceCat){
 		int shortestTime = 0;
-
+		for (Results result : _instance.getYears().get(year).getRaces()
+				.get(raceCat).getParticipants().values()) {
+			int current = result.getTime();
+			shortestTime = (shortestTime == 0 || shortestTime > current) ? current : shortestTime;
+		}
+		return shortestTime;
+	}
+	
+	public int maxTime(String year, String raceCat){
+		int longestTime = 0;
 		for (Results result : _instance.getYears().get(year).getRaces()
 				.get(raceCat).getParticipants().values()) {
 			int current = result.getTime();
 			longestTime = (longestTime == 0 || longestTime < current) ? current : longestTime;
-			shortestTime = (shortestTime == 0 || shortestTime > current) ? current : shortestTime;
 		}
-		return formatTime(longestTime - shortestTime);
+		return longestTime;
+	}
+
+	public int gapTime(String year, String raceCat) {
+		return (maxTime(year, raceCat) - minTime(year, raceCat));
 	}
 
 	public static String formatTime(int time) {
