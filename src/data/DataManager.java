@@ -17,7 +17,7 @@ public class DataManager {
 	private HashMap<String, Year> years;
 
 	private final static String PATH_TO_FILES = "./assets/csv/";
-	private final static String REGEX_MATCHING_FILES = "201[1234].csv";
+	private final static String REGEX_MATCHING_FILES = "201[123456789].csv";
 
 	private static DataManager _instance = null;
 
@@ -144,7 +144,8 @@ public class DataManager {
 			tmpSum += r.getTime();
 			nbPart++;
 		}
-		tmpSum /= nbPart;
+		if(tmpSum != 0)
+			tmpSum /= nbPart;
 		return formatTime((int) tmpSum);
 	}
 

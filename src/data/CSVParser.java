@@ -16,7 +16,7 @@ public class CSVParser {
 		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(
-					file), "ISO-8859-1"));
+					file), "UTF-8"));
 			String line = "";
 			int lineNumber = 0;
 			int col = 0;

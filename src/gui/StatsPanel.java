@@ -80,7 +80,7 @@ public class StatsPanel extends JPanel {
 		minTime.setText(DataManager.formatTime(dm.minTime(""+_year.getYear(), raceCat)));
 		add(minTime, gc);
 		
-		//Next row
+		//Next row //////////////////////////////////////////////////////////
 		gc.gridy = 1;
 		
 		gc.gridx = 0;
@@ -117,7 +117,7 @@ public class StatsPanel extends JPanel {
 		maxTime.setText(DataManager.formatTime(dm.maxTime(""+_year.getYear(), raceCat)));
 		add(maxTime, gc);
 		
-		//Next row
+		//Next row //////////////////////////////////////////////////////////
 		gc.gridy = 2;
 		
 		gc.gridx = 0;
