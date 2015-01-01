@@ -14,12 +14,12 @@ public class ResultsTable extends AbstractTableModel {
 	private final static String PATH_TO_IMG = "./assets/img/";
 	private HashMap<Skier, Results> hm;
 	private Object[][] data;
-	private String[] columnTitles = { "#", "Name", "Birth year", "Club", "Time",
-			"Category rank", "Country" };
+	private String[] columnTitles = { "#", "Name", "Birth year", "Club", "Time", 
+			"Category", "Category rank", "Country" };
 
 	public ResultsTable(HashMap<Skier, Results> _data) {
 		hm = _data;
-		data = new Object[hm.size()][7];
+		data = new Object[hm.size()][8];
 		Results r;
 		int n = 0;
 		for (Skier s : hm.keySet()) {
@@ -29,8 +29,9 @@ public class ResultsTable extends AbstractTableModel {
 			data[n][2] = s.getBirthYear();
 			data[n][3] = s.getClub();
 			data[n][4] = DataManager.formatTime(r.getTime());
-			data[n][5] = r.getCategoryRank();
-			data[n][6] = new ImageIcon(PATH_TO_IMG + s.getNationality().toLowerCase() + ".gif");
+			data[n][5] = s.getCategory();
+			data[n][6] = r.getCategoryRank(); 
+			data[n][7] = new ImageIcon(PATH_TO_IMG + s.getNationality().toLowerCase() + ".gif");
 			n += 1;
 		}
 	}

@@ -122,4 +122,9 @@ public abstract class Skier implements Comparable {
 		Skier s = (Skier)arg0;
 		return getName().compareTo(s.getName());
 	}
+
+	public String getCategory() {
+		return category;
+	}
+	
 }

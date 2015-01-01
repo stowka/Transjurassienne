@@ -22,14 +22,14 @@ public class NorthPanel extends JPanel implements ActionListener {
 	private JLabel yearLabel;
 	private JLabel raceCatLabel;
 	private JLabel searchFieldLabel;
-	private JComboBox raceCat;
-	private JComboBox year;
+	private JComboBox<String> raceCat;
+	private JComboBox<String> year;
 	private JTextField searchField;
 	private DataListener listener;
 
 	private String[] yearsString;
 	private String[] raceCategoryString = { "25CTF", "25CTM", "25FTF", "25FTM",
-			"50CTF", "50CTM", "76FTF", "76FTM" };
+			"50CTF", "50CTM", "50FTF", "50FTM", "76FTF", "76FTM" };
 
 	public NorthPanel() {
 		super();
@@ -64,7 +64,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 			it += 1;
 		}
 		Arrays.sort(yearsString);
-		year = new JComboBox(yearsString);
+		year = new JComboBox<String>(yearsString);
 		year.setName("year");
 		year.setFont(MainFrame.FONT);
 		year.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
@@ -76,7 +76,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 		add(raceCatLabel, this);
 
 		// Set up the raceCat ComboBox
-		raceCat = new JComboBox(raceCategoryString);
+		raceCat = new JComboBox<String>(raceCategoryString);
 		raceCat.setName("race");
 		raceCat.setFont(MainFrame.FONT);
 		raceCat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));

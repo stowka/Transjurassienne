@@ -13,11 +13,13 @@ public class Year implements Comparable {
 		races.put("25CTF", new RaceCT(year, true, 25));
 		races.put("25FTF", new RaceFT(year, true, 25));
 		races.put("50CTF", new RaceCT(year, true, 50));
+		races.put("50FTF", new RaceFT(year, true, 50));
 		races.put("76FTF", new RaceFT(year, true, 76));
 		
 		races.put("25FTM", new RaceFT(year, false, 25));
 		races.put("25CTM", new RaceCT(year, false, 25));
 		races.put("50CTM", new RaceCT(year, false, 50));
+		races.put("50FTM", new RaceFT(year, false, 50));
 		races.put("76FTM", new RaceFT(year, false, 76));
 	}
 

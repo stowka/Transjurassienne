@@ -17,7 +17,7 @@ public class DataManager {
 	private HashMap<String, Year> years;
 
 	private final static String PATH_TO_FILES = "./assets/csv/";
-	private final static String REGEX_MATCHING_FILES = "201[123456789].csv";
+	private final static String REGEX_MATCHING_FILES = "201[0123456789].csv";
 
 	private static DataManager _instance = null;
 
@@ -84,7 +84,7 @@ public class DataManager {
 									nationality, category);
 
 						tmpResults = new Results(rank, categoryRank, time);
-
+						
 						tmpYear.getRaces().get(entry.get("Course"))
 								.addParticipant(tmpSkier, tmpResults);
 
