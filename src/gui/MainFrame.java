@@ -3,14 +3,21 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.HashMap;
+import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import app.Results;
+import app.Skier;
 import app.Year;
 import data.DataManager;
 import event.DataEvent;
 import event.DataListener;
+import event.ResultPanelListener;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -53,6 +60,13 @@ public class MainFrame extends JFrame {
 		// Tab results
 		resultsPanel = new ResultsPanel(currentYear.getRaces()
 				.get(northPanel.getSelectedRace()).getParticipants());
+		resultsPanel.setListener(new ResultPanelListener() {
+			
+			@Override
+			public void sendName(String name) {
+				new SkierInformations(MainFrame.this, name);
+			}
+		});
 		tabs.addTab("Results", resultsPanel);
 
 		// Tab stats
@@ -75,7 +89,35 @@ public class MainFrame extends JFrame {
 			}
 			
 			public void searchResult(String pattern) {
-				System.out.println(pattern);
+		
+				TreeSet<Skier> lstSkiers = DataManager.getInstance().getSkiers();
+				TreeSet<Skier> newLstSkiers = new TreeSet<Skier>();
+				for(Skier skier : lstSkiers) {
+					if(Pattern.matches("[\\s\\w]*"+pattern+"[\\s\\w]*", skier.getName())) {
+						newLstSkiers.add(skier);
+					}
+				}
+				if(!newLstSkiers.isEmpty()) 
+					resultsPanel.globalSearchSkiers(newLstSkiers);
+				else
+					JOptionPane.showMessageDialog(MainFrame.this, "No results found.");
+			}
+			
+			public void searchResult(DataEvent e) {
+				currentYear = DataManager.getInstance().getYears().get(e.getYear());
+				raceCat = e.getRaceCat();
+				
+				HashMap<Skier, Results> newLstSkier = new HashMap<Skier, Results>();
+				HashMap<Skier, Results> lstSkier = currentYear.getRaces().get(raceCat).getParticipants();
+				for(Skier skier : lstSkier.keySet()) {
+					if(Pattern.matches("[\\s\\w]*" + e.getPattern() + "[\\s\\w]*", skier.getName())) {
+						newLstSkier.put(skier, lstSkier.get(skier));
+					}
+				}
+				if(!newLstSkier.isEmpty())
+					resultsPanel.updateField(newLstSkier);
+				else
+					JOptionPane.showMessageDialog(MainFrame.this, "No results found.");
 			}
 		});
 		

@@ -1,10 +1,12 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -31,6 +33,7 @@ public class StatsPanel extends JPanel {
 	JTextField minTime;
 	JTextField maxTime;
 	JTextField timeGap;
+	JPanel flagsPanel;
 	Insets insets;
 
 	public StatsPanel(Year _year, String raceCat) {
@@ -148,6 +151,17 @@ public class StatsPanel extends JPanel {
 		timeGap.setBackground(Color.WHITE);
 		add(timeGap, gc);
 		
+		//Next Row 
+		gc.gridy = 3;
+		
+		gc.gridx = 0;
+		gc.gridwidth = 4;
+		gc.gridheight = 2;
+		gc.fill = GridBagConstraints.BOTH;
+		flagsPanel = new JPanel();
+		flagsPanel.setLayout(new FlowLayout());
+		add(flagsPanel, gc);
+		
 		updateField(_year, raceCat);
 		
 	}
@@ -159,5 +173,9 @@ public class StatsPanel extends JPanel {
 		averageTime.setText(dm.averageTime(""+_year.getYear(), raceCat));
 		nbOfCountry.setText("" + dm.nbCountry(""+_year.getYear(), raceCat));
 		timeGap.setText(DataManager.formatTime(dm.gapTime(""+_year.getYear(), raceCat)));
+		flagsPanel.removeAll();
+		for(String str : dm.nationality(""+_year.getYear(), raceCat)) {
+			flagsPanel.add(new JLabel(new ImageIcon("assets/img/" + str + ".gif")));
+		}
 	}
 }

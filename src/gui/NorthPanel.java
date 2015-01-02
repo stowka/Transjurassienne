@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,9 +8,11 @@ import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -25,8 +28,10 @@ public class NorthPanel extends JPanel implements ActionListener {
 	private JLabel searchFieldLabel;
 	private JComboBox<String> raceCat;
 	private JComboBox<String> year;
+	private JSeparator separator;
 	private JTextField searchField;
 	private JButton searchButton;
+	private JCheckBox globalCheckBox;
 	private DataListener listener;
 
 	private String[] yearsString;
@@ -71,7 +76,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 		year.setFont(MainFrame.FONT);
 		year.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		year.addActionListener(this);
-		add(year, this);
+		add(year);
 
 		// Set up the raceCatLabel
 		raceCatLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
@@ -83,20 +88,29 @@ public class NorthPanel extends JPanel implements ActionListener {
 		raceCat.setFont(MainFrame.FONT);
 		raceCat.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		raceCat.addActionListener(this);
-		add(raceCat, this);
+		add(raceCat);
+		
+		//Separator 
+		separator = new JSeparator(JSeparator.VERTICAL);
+		separator.setPreferredSize(new Dimension(5, 30));
+		add(separator);
 
 		// Set up the searchFieldLabel
 		searchFieldLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-		add(searchFieldLabel, this);
+		add(searchFieldLabel);
 
 		// Set up the search TextField
 		searchField.setBorder(BorderFactory.createEtchedBorder());
-		add(searchField, this);
+		add(searchField);
 		
 		// Set up the search button
 		searchButton = new JButton("search!");
 		searchButton.addActionListener(this);
 		add(searchButton);
+		
+		// Set up the global check box
+		globalCheckBox = new JCheckBox("global ?");
+		add(globalCheckBox);
 	}
 
 	public void setDataListener(DataListener listener) {
@@ -108,7 +122,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 			if (listener != null) {
 				String yearData = (String) year.getSelectedItem();
 				String raceCatData = (String) raceCat.getSelectedItem();
-				String searchData = searchField.getText().replace(' ', '+');
+				String searchData = searchField.getText();
 
 				DataEvent dataEvent = new DataEvent(yearData, raceCatData,
 						searchData);
@@ -117,7 +131,17 @@ public class NorthPanel extends JPanel implements ActionListener {
 			}
 		} else if(e.getSource() == searchButton) {
 			if(listener != null) {
-				listener.searchResult(searchField.getText());
+				if(globalCheckBox.isSelected()) {
+					listener.searchResult(searchField.getText());
+				} else {
+					String yearData = (String) year.getSelectedItem();
+					String raceCatData = (String) raceCat.getSelectedItem();
+					String searchData = searchField.getText();
+
+					DataEvent dataEvent = new DataEvent(yearData, raceCatData,
+							searchData);
+					listener.searchResult(dataEvent);
+				}
 			}
 		}
 	}

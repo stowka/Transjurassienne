@@ -3,12 +3,12 @@ package event;
 public class DataEvent {
 	private String year;
 	private String raceCat;
-	private String search;
+	private String pattern;
 	
-	public DataEvent(String year, String raceCat, String search) {
+	public DataEvent(String year, String raceCat, String pattern) {
 		this.year = year;
 		this.raceCat = raceCat;
-		this.search = search;
+		this.pattern = pattern;
 	}
 
 	public String getYear() {
@@ -27,11 +27,11 @@ public class DataEvent {
 		this.raceCat = raceCat;
 	}
 
-	public String getSearch() {
-		return search;
+	public String getPattern() {
+		return pattern;
 	}
 
-	public void setSearch(String search) {
-		this.search = search;
+	public void setPattern(String search) {
+		this.pattern = search;
 	}
 }

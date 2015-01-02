@@ -3,6 +3,7 @@ package data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.TreeSet;
 
 import app.Race;
@@ -38,7 +39,7 @@ public class DataManager {
 		years = new HashMap<String, Year>();
 		skiers = new TreeSet<Skier>();
 		File[] directoryListing = directory.listFiles();
-		if(directoryListing == null)
+		if (directoryListing == null)
 			System.out.println("directory listing is null");
 
 		String name = "";
@@ -86,7 +87,7 @@ public class DataManager {
 									nationality, category);
 
 						tmpResults = new Results(rank, categoryRank, time);
-						
+
 						tmpYear.getRaces().get(entry.get("Course"))
 								.addParticipant(tmpSkier, tmpResults);
 
@@ -106,8 +107,8 @@ public class DataManager {
 		return _instance.skiers;
 	}
 
-	//Stats computing 
-	
+	// Stats computing
+
 	public int numberOfParticipants(String year, String category) {
 		return _instance.getYears().get(year).getRaces().get(category)
 				.getParticipants().size();
@@ -147,7 +148,7 @@ public class DataManager {
 			tmpSum += r.getTime();
 			nbPart++;
 		}
-		if(tmpSum != 0)
+		if (tmpSum != 0)
 			tmpSum /= nbPart;
 		return formatTime((int) tmpSum);
 	}
@@ -160,29 +161,41 @@ public class DataManager {
 		}
 		return nationality.size();
 	}
-	
-	public int minTime(String year, String raceCat){
+
+	public int minTime(String year, String raceCat) {
 		int shortestTime = 0;
 		for (Results result : _instance.getYears().get(year).getRaces()
 				.get(raceCat).getParticipants().values()) {
 			int current = result.getTime();
-			shortestTime = (shortestTime == 0 || shortestTime > current) ? current : shortestTime;
+			shortestTime = (shortestTime == 0 || shortestTime > current) ? current
+					: shortestTime;
 		}
 		return shortestTime;
 	}
-	
-	public int maxTime(String year, String raceCat){
+
+	public int maxTime(String year, String raceCat) {
 		int longestTime = 0;
 		for (Results result : _instance.getYears().get(year).getRaces()
 				.get(raceCat).getParticipants().values()) {
 			int current = result.getTime();
-			longestTime = (longestTime == 0 || longestTime < current) ? current : longestTime;
+			longestTime = (longestTime == 0 || longestTime < current) ? current
+					: longestTime;
 		}
 		return longestTime;
 	}
 
 	public int gapTime(String year, String raceCat) {
 		return (maxTime(year, raceCat) - minTime(year, raceCat));
+	}
+
+	public TreeSet<String> nationality(String year, String raceCat) {
+		Set<Skier> lstSkier = _instance.getYears().get(year).getRaces()
+				.get(raceCat).getParticipants().keySet();
+		TreeSet<String> country = new TreeSet<String>();
+		for(Skier skier : lstSkier) {
+			country.add(skier.getNationality().toLowerCase());
+		}
+		return country;
 	}
 
 	public static String formatTime(int time) {
