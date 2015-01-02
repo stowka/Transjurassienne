@@ -16,7 +16,7 @@ public class DataManager {
 	private TreeSet<Skier> skiers;
 	private HashMap<String, Year> years;
 
-	private final static String PATH_TO_FILES = "./assets/csv/";
+	private final static String PATH_TO_FILES = "assets/csv/";
 	private final static String REGEX_MATCHING_FILES = "201[0123456789].csv";
 
 	private static DataManager _instance = null;
@@ -38,6 +38,8 @@ public class DataManager {
 		years = new HashMap<String, Year>();
 		skiers = new TreeSet<Skier>();
 		File[] directoryListing = directory.listFiles();
+		if(directoryListing == null)
+			System.out.println("directory listing is null");
 
 		String name = "";
 		int birthYear = 0;
