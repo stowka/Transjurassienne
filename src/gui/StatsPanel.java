@@ -58,7 +58,6 @@ public class StatsPanel extends JPanel {
 		nbParticipants.setFont(MainFrame.FONT);
 		nbParticipants.setEditable(false);
 		nbParticipants.setBackground(Color.WHITE);
-		nbParticipants.setText("" + dm.numberOfParticipants(""+_year.getYear(), raceCat));
 		add(nbParticipants, gc);
 		
 		insets.set(10, 50, 0, 0);
@@ -77,7 +76,6 @@ public class StatsPanel extends JPanel {
 		minTime.setFont(MainFrame.FONT);
 		minTime.setEditable(false);
 		minTime.setBackground(Color.WHITE);
-		minTime.setText(DataManager.formatTime(dm.minTime(""+_year.getYear(), raceCat)));
 		add(minTime, gc);
 		
 		//Next row //////////////////////////////////////////////////////////
@@ -95,7 +93,6 @@ public class StatsPanel extends JPanel {
 		averageTime.setFont(MainFrame.FONT);
 		averageTime.setEditable(false);
 		averageTime.setBackground(Color.WHITE);
-		averageTime.setText(dm.averageTime(""+_year.getYear(), raceCat));
 		add(averageTime, gc);
 		
 		insets.set(10, 50, 0, 0);
@@ -114,7 +111,6 @@ public class StatsPanel extends JPanel {
 		maxTime.setFont(MainFrame.FONT);
 		maxTime.setEditable(false);
 		maxTime.setBackground(Color.WHITE);
-		maxTime.setText(DataManager.formatTime(dm.maxTime(""+_year.getYear(), raceCat)));
 		add(maxTime, gc);
 		
 		//Next row //////////////////////////////////////////////////////////
@@ -132,7 +128,6 @@ public class StatsPanel extends JPanel {
 		nbOfCountry.setFont(MainFrame.FONT);
 		nbOfCountry.setEditable(false);
 		nbOfCountry.setBackground(Color.WHITE);
-		nbOfCountry.setText("" + dm.nbCountry(""+_year.getYear(), raceCat));
 		add(nbOfCountry, gc);
 		
 		insets.set(10, 50, 0, 0);
@@ -151,13 +146,16 @@ public class StatsPanel extends JPanel {
 		timeGap.setFont(MainFrame.FONT);
 		timeGap.setEditable(false);
 		timeGap.setBackground(Color.WHITE);
-		timeGap.setText(DataManager.formatTime(dm.gapTime(""+_year.getYear(), raceCat)));
 		add(timeGap, gc);
+		
+		updateField(_year, raceCat);
 		
 	}
 	
 	public void updateField(Year _year, String raceCat) {
 		nbParticipants.setText("" + dm.numberOfParticipants(""+_year.getYear(), raceCat));
+		minTime.setText(DataManager.formatTime(dm.minTime(""+_year.getYear(), raceCat)));
+		maxTime.setText(DataManager.formatTime(dm.maxTime(""+_year.getYear(), raceCat)));
 		averageTime.setText(dm.averageTime(""+_year.getYear(), raceCat));
 		nbOfCountry.setText("" + dm.nbCountry(""+_year.getYear(), raceCat));
 		timeGap.setText(DataManager.formatTime(dm.gapTime(""+_year.getYear(), raceCat)));

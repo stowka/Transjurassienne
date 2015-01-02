@@ -104,7 +104,8 @@ public class DataManager {
 		return _instance.skiers;
 	}
 
-	// TODO stats calculations
+	//Stats computing 
+	
 	public int numberOfParticipants(String year, String category) {
 		return _instance.getYears().get(year).getRaces().get(category)
 				.getParticipants().size();

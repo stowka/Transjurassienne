@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +26,7 @@ public class NorthPanel extends JPanel implements ActionListener {
 	private JComboBox<String> raceCat;
 	private JComboBox<String> year;
 	private JTextField searchField;
+	private JButton searchButton;
 	private DataListener listener;
 
 	private String[] yearsString;
@@ -90,6 +92,11 @@ public class NorthPanel extends JPanel implements ActionListener {
 		// Set up the search TextField
 		searchField.setBorder(BorderFactory.createEtchedBorder());
 		add(searchField, this);
+		
+		// Set up the search button
+		searchButton = new JButton("search!");
+		searchButton.addActionListener(this);
+		add(searchButton);
 	}
 
 	public void setDataListener(DataListener listener) {
@@ -97,16 +104,21 @@ public class NorthPanel extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (listener != null) {
-			String yearData = (String) year.getSelectedItem();
-			String raceCatData = (String) raceCat.getSelectedItem();
-			String searchData = searchField.getText().replace(' ', '+');
+		if(e.getSource() == raceCat || e.getSource() == year) {
+			if (listener != null) {
+				String yearData = (String) year.getSelectedItem();
+				String raceCatData = (String) raceCat.getSelectedItem();
+				String searchData = searchField.getText().replace(' ', '+');
 
-			DataEvent dataEvent = new DataEvent(yearData, raceCatData,
-					searchData);
+				DataEvent dataEvent = new DataEvent(yearData, raceCatData,
+						searchData);
 
-			listener.dataEmitted(dataEvent);
-
+				listener.dataEmitted(dataEvent);
+			}
+		} else if(e.getSource() == searchButton) {
+			if(listener != null) {
+				listener.searchResult(searchField.getText());
+			}
 		}
 	}
 

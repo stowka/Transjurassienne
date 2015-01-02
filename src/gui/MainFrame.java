@@ -73,6 +73,10 @@ public class MainFrame extends JFrame {
 				statsPanel.updateField(currentYear, raceCat);
 				graphsPanel.updateField(currentYear, raceCat);
 			}
+			
+			public void searchResult(String pattern) {
+				System.out.println(pattern);
+			}
 		});
 		
 		add(northPanel, BorderLayout.NORTH);
