@@ -24,7 +24,6 @@ public class MainFrame extends JFrame {
 	private NorthPanel northPanel;
 	private ResultsPanel resultsPanel;
 	private StatsPanel statsPanel;
-	private GraphsPanel graphsPanel;
 
 	private Menu menu;
 	private JTabbedPane tabs;
@@ -72,10 +71,6 @@ public class MainFrame extends JFrame {
 		// Tab stats
 		statsPanel = new StatsPanel(currentYear, raceCat);
 		tabs.addTab("Stats", statsPanel);
-
-		// Tab graphs
-		graphsPanel = new GraphsPanel(currentYear, raceCat);
-		tabs.addTab("Graphics", graphsPanel);
 		
 		// Listening event from northPanel
 		northPanel.setDataListener(new DataListener() {
@@ -85,7 +80,6 @@ public class MainFrame extends JFrame {
 				
 				resultsPanel.updateField(currentYear.getRaces().get(raceCat).getParticipants());
 				statsPanel.updateField(currentYear, raceCat);
-				graphsPanel.updateField(currentYear, raceCat);
 			}
 			
 			public void searchResult(String pattern) {

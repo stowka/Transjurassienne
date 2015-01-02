@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import app.Race;
@@ -49,48 +51,110 @@ public class SkierInformations extends JDialog implements ActionListener {
 				BorderFactory.createBevelBorder(1)));
 		HashMap<String, String> infosSkier = informationsAboutSkier();
 		
+		int row = 0;
+		
 		//First Row
-		gc.gridy = 0;
+		gc.gridy = row;
 		gc.gridx = 0;
-		centerPanel.add(new JLabel("BirthYear"), gc);
+		gc.anchor = GridBagConstraints.LINE_END;
+		centerPanel.add(new JLabel("Birth Year : "), gc);
 		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
 		centerPanel.add(new JLabel(infosSkier.get("birthYear")), gc);
 		
 		//Second row
-		gc.gridy = 1;
+		row++;
+		gc.gridy = row;
 		gc.gridx = 0;
-		centerPanel.add(new JLabel("Club"), gc);
+		gc.anchor = GridBagConstraints.LINE_END;
+		centerPanel.add(new JLabel("Club : "), gc);
 		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
 		centerPanel.add(new JLabel(infosSkier.get("club")), gc);
 		
 		//Third row
-		gc.gridy = 2;
+		row++;
+		gc.gridy = row;
 		gc.gridx = 0;
-		centerPanel.add(new JLabel("Category"), gc);
+		gc.anchor = GridBagConstraints.LINE_END;
+		centerPanel.add(new JLabel("Category : "), gc);
 		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
 		centerPanel.add(new JLabel(infosSkier.get("category")), gc);
 		
 		//Fourth row
-		gc.gridy = 3;
+		row++;
+		gc.gridy = row;
 		gc.gridx = 0;
-		centerPanel.add(new JLabel("Nationality"), gc);
+		gc.anchor = GridBagConstraints.LINE_END;
+		centerPanel.add(new JLabel("Nationality : "), gc);
 		gc.gridx = 1;
-		
+		gc.anchor = GridBagConstraints.LINE_START;
 		centerPanel.add(new JLabel(infosSkier.get("nationality")), gc);
+		
+		//Fifth row
+		row++;
+		gc.gridy = row;
+		gc.gridx = 0;
+		gc.gridwidth = 4;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
+		separator.setPreferredSize(new Dimension(500, 10));
+		centerPanel.add(separator, gc);
 
-		/*
-		 * centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-		 * HashMap<Year, HashMap<Race, Results>> infos =
-		 * informationsAboutRaces(); for(Year y : infos.keySet()) {
-		 * centerPanel.add(new JLabel(""+y.getYear(), SwingConstants.CENTER));
-		 * HashMap<Race, Results> detail = infos.get(y); for(Race r :
-		 * detail.keySet()) { centerPanel.add(new JLabel(""+r.toString(),
-		 * SwingConstants.CENTER)); Results results = detail.get(r); JPanel
-		 * tmpPanel = new JPanel(); tmpPanel.setLayout(new FlowLayout());
-		 * tmpPanel.add(new JLabel(""+results.getRank())); tmpPanel.add(new
-		 * JLabel(""+results.getTime())); tmpPanel.add(new
-		 * JLabel(""+results.getCategoryRank())); centerPanel.add(tmpPanel); } }
-		 */
+		//Sixth row
+		HashMap<Year, HashMap<Race, Results>> infos = informationsAboutRaces();
+		for(Year y : infos.keySet()) {
+			row++;
+			gc.gridy = row;
+			gc.gridx = 0;
+			gc.gridwidth = 1;
+			gc.fill = GridBagConstraints.NONE;
+			centerPanel.add(new JLabel("Year : "), gc);
+			gc.gridx = 1;
+			centerPanel.add(new JLabel(""+y.getYear()), gc);
+			
+			HashMap<Race, Results> detail = infos.get(y);
+			for(Race r : detail.keySet()) {
+				row++;
+				gc.gridy = row;
+				gc.gridx = 0;
+				centerPanel.add(new JLabel("Category : "), gc);
+				gc.gridx = 1;
+				centerPanel.add(new JLabel(r.toString()), gc);
+				
+				Results result = detail.get(r);
+				row++;
+				gc.gridy = row;
+				gc.gridx = 0;
+				centerPanel.add(new JLabel("Rank"), gc);
+				gc.gridx = 1;
+				centerPanel.add(new JLabel("Time"), gc);
+				gc.gridx = 2;
+				centerPanel.add(new JLabel("Category Rank"), gc);
+				
+				row++;
+				gc.gridy = row;
+				gc.gridx = 0;
+				centerPanel.add(new JLabel(""+result.getRank()), gc);
+				gc.gridx = 1;
+				centerPanel.add(new JLabel(DataManager.formatTime(result.getTime())), gc);
+				gc.gridx = 2;
+				centerPanel.add(new JLabel(""+result.getCategoryRank()), gc);
+				
+				row++;
+				gc.gridy = row;
+				gc.gridx = 0;
+				gc.gridwidth = 4;
+				gc.fill = GridBagConstraints.HORIZONTAL;
+				JSeparator separator2 = new JSeparator(JSeparator.HORIZONTAL);
+				separator.setPreferredSize(new Dimension(500, 10));
+				centerPanel.add(separator2, gc);
+				
+			}
+			
+		}
+		
 		add(centerPanel, BorderLayout.CENTER);
 
 		// South Panel
